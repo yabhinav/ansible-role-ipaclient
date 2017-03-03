@@ -1,0 +1,15 @@
+---
+# vars file for ansible-role-ipaclient
+
+ipaclient_packages:
+  - ipa-client
+  - ipa-admintools
+  - sssd-ipa
+  - sssd-ldap
+  - ipa-python
+  - libipa_hbac
+  - python-libipa_hbac
+  - python-iniparse
+  - ca-certificates
+
+ipaclient_base_command: ipa-client-install -U

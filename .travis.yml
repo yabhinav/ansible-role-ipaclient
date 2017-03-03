@@ -1,0 +1,39 @@
+---
+# Author : Abhinav Y <http://yabhinav.github.io>
+
+sudo: required
+
+env:
+  global: 
+    - rolename : ansible-role-ipaclient
+  matrix:
+    - distribution: centos       # Linux Distribution
+      version: 6                 # Distribution version
+    - distribution: centos
+      version: 7
+    - distribution: fedora
+      version: 25
+    - distribution: ubuntu
+      version: 16.04
+
+
+services: docker
+
+before_install:
+  - sudo apt-get update
+  # Install latest Git and docker engine
+  - sudo apt-get install --only-upgrade git docker-engine
+
+
+before_script:
+  # Fetch the latest test code for the role
+  - 'git clone --depth 1 https://github.com/yabhinav/ansible-test-suite'
+  - 'mv ansible-test-suite/$rolename/* . &&  rm -rf ansible-test-suite ' 
+
+script:
+  - docker version
+  # Create container and load the role as a volume
+  - /bin/bash docker-tests.sh
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

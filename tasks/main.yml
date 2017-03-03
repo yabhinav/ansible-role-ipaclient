@@ -1,0 +1,47 @@
+---
+
+- name: Gather OS Specific Variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_system }}.yml"
+        - default.yml
+      paths:
+        - "{{ role_path }}/vars"
+
+- name: Install IPA Client Packages
+  action: >
+    {{ ansible_pkg_mgr }}  name="{{ item }}" state=present
+  with_items: "{{ ipaclient_packages }}"
+  become: True
+
+- name: Run the IPA Client uninstaller
+  shell: "{{ ipaclient_base_command }} --uninstall"
+  when: ipaclient_reconfigure
+  become: True
+
+- name: Run the IPA Client installer
+  shell: >
+    {{ ipaclient_base_command }}
+    --force-join
+    --realm {{ipaserver_realm}}
+    --domain {{ ipaserver_domain }}
+    --principal {{ ipaserver_admin_username }}@{{ ipaserver_realm }}
+    --password {{ ipaserver_admin_password }}
+    --hostname={{ ansible_fqdn }}
+    {{ '--mkhomedir' if ipaclient_mkhomedir | default(True) else '' }}
+    {{ '--ssh-trust-dns' if ipaclient_ssh_trust_dns | default(False) else '' }}
+    {{ '' if ipaclient_setup_ntp | default(True) else '--no-ntp' }}
+    {{ '' if ipaclient_configure_ssh | default(True) else '--no-ssh' }}
+    {{ '' if ipaclient_configure_sshd | default(True) else '--no-sshd' }}
+  args:
+    creates: /etc/ipa/default.conf  #already configured, set ipaclient_reconfigure True
+  register: ipaclientsetup
+  become: True
+
+
+

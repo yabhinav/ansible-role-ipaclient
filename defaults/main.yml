@@ -1,0 +1,21 @@
+---
+# defaults file for ansible-role-ipaclient
+
+# IPA Serever Keberos Realm and Domain
+ipaserver_realm: "{{ ansible_domain | upper }}"
+ipaserver_domain: "{{ ansible_domain }}"
+
+# IPA Server Admin login
+ipaserver_admin_username : admin 
+ipaserver_admin_password : Secret123
+
+# Assume its first time client installation
+ipaclient_reconfigure : False 
+
+# IPA Client configuration settings
+ipaclient_configure_ssh: True
+ipaclient_configure_sshd: True
+ipaclient_mkhomedir: True
+ipaclient_ssh_trust_dns: False
+ipaclient_setup_ntp: False #Disable if NTP configured separately
+

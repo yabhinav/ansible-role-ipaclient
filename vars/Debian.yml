@@ -1,0 +1,12 @@
+---
+# vars file for ansible-role-ipaclient on Ubuntu/Debian servers
+
+ipaclient_packages:
+  - freeipa-client
+  - freeipa-admintools
+  - sssd-ipa
+  - sssd-ldap
+  - ca-certificates
+
+
+ipaclient_base_command: ipa-client-install -U

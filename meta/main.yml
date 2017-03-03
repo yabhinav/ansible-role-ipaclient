@@ -1,0 +1,27 @@
+galaxy_info:
+  author: Abhinav Yalamanchili
+  description: Install a clean IPA cleint or reconfigure it for RHEL/CentOS/Fedora and Debian/Ubuntu.
+
+  license: MIT
+
+  min_ansible_version: 2.0.0.0
+
+  github_branch: master
+
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Fedora
+      versions:
+        - 25
+    - name: Ubuntu
+      versions:
+        - xenial
+
+
+  galaxy_tags: ['ipaclient','freeipa','install',kerberos','security','identity']
+
+dependencies:
+  - yabhinav.common

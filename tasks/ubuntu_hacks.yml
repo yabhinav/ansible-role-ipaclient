@@ -1,0 +1,21 @@
+---
+# https://bugs.launchpad.net/ubuntu/+source/freeipa. The package is still in testing phase and lot of issues
+
+# Issue with mkhomedir in debain
+- name: Enable pam mkhomedir
+  lineinfile:
+    dest: /etc/pam.d/common-session
+    line: 'session     required      pam_mkhomedir.so skel=/etc/skel umask=0022'
+  become: true
+
+# Issue with pam and ssd in debain
+- name: Enable nss,pam,sssd,sudo functionality
+  lineinfile:
+    dest: /etc/sssd/sssd.conf
+    regexp: '^services.*'
+    line: 'services = nss, pam, ssh, sudo'
+    create: yes
+  become: true
+  notify:
+    - restart sssd
+    - restart ssh
