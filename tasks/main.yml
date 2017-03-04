@@ -15,7 +15,7 @@
 
 - name: Install IPA Client Packages
   action: >
-    {{ ansible_pkg_mgr }}  name="{{ item }}" state=present
+    {{ ansible_pkg_mgr }}  name="{{ item }}" state=latest
   with_items: "{{ ipaclient_packages }}"
   become: True
 
