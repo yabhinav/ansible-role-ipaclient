@@ -28,13 +28,13 @@ Optional variables are listed here with default values :
 	ipaclient_configure_sshd: True
 	ipaclient_mkhomedir: True
 	ipaclient_ssh_trust_dns: False
-	ipaclient_setup_ntp: True
+	ipaclient_setup_ntp: False  #ansible-role-common will set NTP
 
 
 Dependencies
 ------------
 
-None.
+	- [yabhinav.common](https://galaxy.ansible.com/yabhinav/common/)
 
 
 Example Playbook
@@ -53,6 +53,8 @@ Issues
 ------
 
 - It is not advised to execute this role from ansible running on python-virtualenv on Ubuntu16.04 locally due to this [issue](https://github.com/pypa/virtualenv/issues/1022) . Also have a look at same [issue here](https://github.com/ansible/ansible/issues/21691) and [here](https://bugs.launchpad.net/ubuntu/+source/freeipa) for other ipaclient-installer script issues
+- Freeipa-admintools is available only in Ubuntu16.04, So Debian 7,8 and Ubuntu 12.04 and 14.04 support not present for this role
+- [rpcbind installation hangs ](https://github.com/yabhinav/docker-ansible-images/issues/4) when installing ipa-client on `CentOS7` image rpcbind installation  hangs the both ansibe playbook and docker exec  commands alike, hence add it to image directly as a necessary package.
 
 
 License
