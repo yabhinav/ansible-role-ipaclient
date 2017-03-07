@@ -7,8 +7,8 @@ env:
   global: 
     - rolename : ansible-role-ipaclient
   matrix:
-    - distribution: centos       # Linux Distribution
-      version: 6                 # Distribution version
+    # - distribution: centos       # Linux Distribution
+    #   version: 6                 # Distribution version
     - distribution: centos
       version: 7
     - distribution: fedora

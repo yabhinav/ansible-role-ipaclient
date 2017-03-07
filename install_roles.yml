@@ -2,4 +2,4 @@
 # Dependency roles to be installed from galaxy
 
 - src : yabhinav.common
-  version: v2.0.0
+  version: v3.0.0
