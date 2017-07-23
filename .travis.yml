@@ -3,6 +3,9 @@
 
 sudo: required
 
+language: python
+python: "2.7"
+
 env:
   global: 
     - rolename : ansible-role-ipaclient
@@ -19,10 +22,13 @@ env:
 
 services: docker
 
+language: python
+python: "2.7"
+
 before_install:
   - sudo apt-get update
-  # Install latest Git and docker engine
-  - sudo apt-get install --only-upgrade git docker-engine
+  # Install/Upgrade latest Git and docker community engine
+  - sudo apt-get install --only-upgrade git docker-ce
 
 
 before_script:
